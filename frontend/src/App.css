@@ -1,0 +1,49 @@
+:root {
+    --primary-color:hsl(200, 100%, 70%);
+    --secondary-color:hsl(200, 100%, 40%);
+    --link-hover-accent:hsl(200, 100%, 85%);
+  }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    background-color: var(--primary-color);
+  }
+  
+  nav ul {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    list-style: none;
+  }
+  
+  nav ul li {
+    display: inline-block;
+    box-sizing: border-box;
+  }
+  
+  .nav-title {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-right: max(33vw, 5px);
+    font-weight: bolder;
+    text-shadow: 2px 2px 1px var(--link-hover-accent);
+  }
+  
+  .nav-link {
+    margin: 0;
+    padding: 1rem;
+    border:none;
+    background-color:var(--primary-color);
+    cursor: pointer;
+  }
+  
+  .active {
+    background-color: var(--secondary-color);
+  }
+  
+  .nav-link:hover {
+    background-color: var(--link-hover-accent);
+  }
