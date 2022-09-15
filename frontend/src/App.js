@@ -26,6 +26,30 @@ const taskItems = [
     description: "Write article on how to use Django with React",
     completed: false,
   },
+  {
+    id: 5,
+    title: "Study 2",
+    description: "Read Eorzean textbook for the upcoming test",
+    completed: false,
+  },
+  {
+    id: 6,
+    title: "Chill",
+    description: "Watch Final Fantasy XIV : Endwalker and cry, and again, and again, and again, and again, and again",
+    completed: false,
+  },
+  {
+    id: 7,
+    title: "Study",
+    description: "Read Algebra and History textbook for the upcoming test",
+    completed: false,
+  },
+  {
+    id: 8,
+    title: "Study",
+    description: "Read Algebra and History textbook for the upcoming test",
+    completed: false,
+  },
 ];
 
 class App extends Component {
@@ -50,15 +74,20 @@ class App extends Component {
       <nav>
         <span
           className="nav-title"
-        >
+          >
           TaskGuide
         </span>
+        <button 
+          className="new-task-btn"
+          >
+          New Task
+        </button>
         <ul>
           <li>
             <button 
               className={this.state.viewCompleted ? "nav-link active" : "nav-link"}
               onClick={() => this.displayCompleted(true)}
-            >
+              >
               Complete
             </button>
           </li>
@@ -66,7 +95,7 @@ class App extends Component {
             <button 
               className={this.state.viewCompleted ? "nav-link" : "nav-link active"}
               onClick={() => this.displayCompleted(false)}
-            >
+              >
               Incomplete
             </button>
           </li>
@@ -93,7 +122,12 @@ class App extends Component {
         >
           {item.title}
         </span>
-        <span>
+        <p>
+          {item.description}
+        </p>
+        <span
+        className="control-btns"
+        >
           <button 
             className="btn btn-secondary"
           >
