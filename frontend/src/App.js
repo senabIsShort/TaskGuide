@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Modal from "./components/Modal";
 import './App.css' ;
 
 const taskItems = [
@@ -58,6 +59,12 @@ class App extends Component {
     this.state = {
       viewCompleted: false,
       taskList: taskItems,
+      showModal:false,
+      activeItem: {
+        title: "",
+        description: "",
+        completed: false,
+      }
     };
   }
 
@@ -68,6 +75,26 @@ class App extends Component {
 
     return this.setState({ viewCompleted: false });
   }
+
+  showModal = (e) => {
+    return this.setState({ showModal: !this.state.showModal });
+  };
+
+  handleSubmit = (item) => {
+    this.showModal();
+
+    alert("save" + JSON.stringify(item));
+  };
+
+  handleDelete = (item) => {
+    alert("delete" + JSON.stringify(item));
+  };
+
+  createItem = () => {
+    const item = {title: "", description: "", completed: false};
+
+    this.setState({ activeItem: item, showModal: !this.state.showModal });
+  };
 
   renderTabList = () => {
     return (
@@ -81,6 +108,12 @@ class App extends Component {
           className="new-task-btn"
           >
           New Task
+        </button>
+        <button onClick={e => {
+          this.showModal();
+        }}
+          >
+          Show Modal
         </button>
         <ul>
           <li>
@@ -143,6 +176,34 @@ class App extends Component {
     ));
   };
 
+  renderForm() {
+    // TODO
+    return (
+      <>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Title:
+          <input 
+            type="text" 
+            value={this.state.activeItem.title} 
+            onChange={this.handleChange} 
+            placeholder="Enter the title for your Task"
+          />
+        </label>
+        <label>
+          Description:
+          <textarea 
+            value={this.state.activeItem.description} 
+            onChange={this.handleChange} 
+            placeholder="Enter the description your Task"
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+      </>
+    );
+  }
+
 
   render() {
     return (
@@ -153,6 +214,14 @@ class App extends Component {
           {this.renderItems()}
         </ul>
       </main>
+      <Modal 
+        className="toggle-button" 
+        onClose={this.showModal}
+        showModal={this.state.showModal}
+        activeItem={this.state.activeItem}
+      >
+        {this.renderForm()}
+      </Modal>
       </>
     );
   }
