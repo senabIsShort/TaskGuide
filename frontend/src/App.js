@@ -1,102 +1,82 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Modal from "./components/Modal";
 import './App.css' ;
 
-const taskItems = [
-  {
-    id: 1,
-    title: "Go to Market",
-    description: "Buy ingredients to prepare dinner",
-    completed: true,
-  },
-  {
-    id: 2,
-    title: "Study",
-    description: "Read Algebra and History textbook for the upcoming test",
+function App () {
+  const [viewCompleted, setViewCompleted] = useState(false);
+  const [taskList, setTaskList] = useState([]);
+  const [activeItem, setActiveItem] = useState({
+    title: "",
+    description: "",
     completed: false,
-  },
-  {
-    id: 3,
-    title: "Sammy's books",
-    description: "Go to library to return Sammy's books",
-    completed: true,
-  },
-  {
-    id: 4,
-    title: "Article",
-    description: "Write article on how to use Django with React",
-    completed: false,
-  },
-  {
-    id: 5,
-    title: "Study 2",
-    description: "Read Eorzean textbook for the upcoming test",
-    completed: false,
-  },
-  {
-    id: 6,
-    title: "Chill",
-    description: "Watch Final Fantasy XIV : Endwalker and cry, and again, and again, and again, and again, and again",
-    completed: false,
-  },
-  {
-    id: 7,
-    title: "Study",
-    description: "Read Algebra and History textbook for the upcoming test",
-    completed: false,
-  },
-  {
-    id: 8,
-    title: "Study",
-    description: "Read Algebra and History textbook for the upcoming test",
-    completed: false,
-  },
-];
+  });
+  const [visibility, setVisibility] = useState(false);
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewCompleted: false,
-      taskList: taskItems,
-      showModal:false,
-      activeItem: {
-        title: "",
-        description: "",
-        completed: false,
-      }
-    };
+  useEffect(() => {
+    refreshList();
+  },[])
+
+  function refreshList() {
+    axios
+      .get("api/tasks")
+      .then((result) => setTaskList(result.data))
+      .catch((error) => console.log(error));
   }
 
-  displayCompleted = (status) => {
-    if (status) {
-      return  this.setState({ viewCompleted: true });
+  function toggle() {
+    setVisibility(!visibility);
+  }
+
+  function handleTitleChange (event) {
+    setActiveItem( item => {
+      return {...item, title: event.target.value} 
+    });
+  }
+
+  function handleDescriptionChange (event) {
+    setActiveItem( item => {
+      return {...item, description: event.target.value} 
+    });
+  }
+
+  function handleSubmit () {
+    toggle();
+
+    if(activeItem.id) {
+      axios
+        .put(`/api/tasks/${activeItem.id}/`, activeItem)
+        .then(() => refreshList());
+      return;
     }
 
-    return this.setState({ viewCompleted: false });
-  }
+    axios
+      .post("api/tasks/", activeItem)
+      .then(() => refreshList());
 
-  showModal = (e) => {
-    return this.setState({ showModal: !this.state.showModal });
+    // alert("save" + JSON.stringify(activeItem));
   };
 
-  handleSubmit = (item) => {
-    this.showModal();
-
-    alert("save" + JSON.stringify(item));
+  function handleDelete (item) {
+    axios
+      .delete(`/api/tasks/${item.id}/`)
+      .then(() => refreshList());
+    // alert("delete" + JSON.stringify(item));
   };
 
-  handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item));
-  };
-
-  createItem = () => {
+  function createItem () {
     const item = {title: "", description: "", completed: false};
 
-    this.setState({ activeItem: item, showModal: !this.state.showModal });
+    setActiveItem(item);
+    toggle();
   };
 
-  renderTabList = () => {
+  function editItem (item) {
+    setActiveItem(item);
+    toggle();
+  }
+
+  function renderTabList () {
     return (
       <nav>
         <span
@@ -106,28 +86,23 @@ class App extends Component {
         </span>
         <button 
           className="new-task-btn"
+          onClick={createItem}
           >
           New Task
-        </button>
-        <button onClick={e => {
-          this.showModal();
-        }}
-          >
-          Show Modal
         </button>
         <ul>
           <li>
             <button 
-              className={this.state.viewCompleted ? "nav-link active" : "nav-link"}
-              onClick={() => this.displayCompleted(true)}
+              className={viewCompleted ? "nav-link active" : "nav-link"}
+              onClick={() => setViewCompleted(true)}
               >
               Complete
             </button>
           </li>
           <li>
             <button 
-              className={this.state.viewCompleted ? "nav-link" : "nav-link active"}
-              onClick={() => this.displayCompleted(false)}
+              className={viewCompleted ? "nav-link" : "nav-link active"}
+              onClick={() => setViewCompleted(false)}
               >
               Incomplete
             </button>
@@ -137,9 +112,8 @@ class App extends Component {
     );
   };
 
-  renderItems = () => {
-    const { viewCompleted } = this.state;
-    const newItems = this.state.taskList.filter(
+  function renderItems () {
+    const newItems = taskList.filter(
       (item) => item.completed === viewCompleted
     );
 
@@ -149,7 +123,7 @@ class App extends Component {
       >
         <span
           className={`task-title ${
-            this.state.viewCompleted ? "completed-task" : ""
+            viewCompleted ? "completed-task" : ""
           }`}
           title={item.description}
         >
@@ -163,11 +137,13 @@ class App extends Component {
         >
           <button 
             className="btn btn-secondary"
+            onClick={() => editItem(item)}
           >
             Edit
           </button>
           <button 
             className="btn btn-important"
+            onClick={() => handleDelete(item)}
           >
             Delete
           </button>
@@ -176,25 +152,24 @@ class App extends Component {
     ));
   };
 
-  renderForm() {
-    // TODO
+  function renderForm() {
     return (
       <>
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>
           Title:
           <input 
             type="text" 
-            value={this.state.activeItem.title} 
-            onChange={this.handleChange} 
+            value={activeItem.title} 
+            onChange={handleTitleChange} 
             placeholder="Enter the title for your Task"
           />
         </label>
         <label>
           Description:
           <textarea 
-            value={this.state.activeItem.description} 
-            onChange={this.handleChange} 
+            value={activeItem.description} 
+            onChange={handleDescriptionChange} 
             placeholder="Enter the description your Task"
           />
         </label>
@@ -203,28 +178,25 @@ class App extends Component {
       </>
     );
   }
+  
+  return (
+    <>
+    {renderTabList()}
+    <main>
+      <ul>
+        {renderItems()}
+      </ul>
+    </main>
+    <Modal 
+      visibility={visibility}
+      close={toggle}
+    >
+      {renderForm()}
+    </Modal>
+    </>
+  );
 
-
-  render() {
-    return (
-      <>
-      {this.renderTabList()}
-      <main>
-        <ul>
-          {this.renderItems()}
-        </ul>
-      </main>
-      <Modal 
-        className="toggle-button" 
-        onClose={this.showModal}
-        showModal={this.state.showModal}
-        activeItem={this.state.activeItem}
-      >
-        {this.renderForm()}
-      </Modal>
-      </>
-    );
-  }
+  
 }
 
 export default App;

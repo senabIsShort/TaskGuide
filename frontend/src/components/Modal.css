@@ -7,6 +7,8 @@
     width: clamp(200px, 40vw, 1000px);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: white;
     border: 1px solid #ccc;
     box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
@@ -17,4 +19,19 @@
 
 .content {
     flex: 0 0 80%;
+}
+
+.content form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content form label {
+    margin-bottom: 1rem;
+}
+
+.content form:last-child {
+    margin-bottom: 1rem;
 }
