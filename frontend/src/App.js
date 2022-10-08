@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Modal from "./components/Modal";
 import './App.css' ;
+import Modal from "./components/Modal/Modal";
+import Form from "./components/Form/Form";
+import Navigation from "./components/Navigation/Navigation";
 
 function App () {
   const [viewCompleted, setViewCompleted] = useState(false);
@@ -54,14 +56,12 @@ function App () {
       .post("api/tasks/", activeItem)
       .then(() => refreshList());
 
-    // alert("save" + JSON.stringify(activeItem));
   };
 
   function handleDelete (item) {
     axios
       .delete(`/api/tasks/${item.id}/`)
       .then(() => refreshList());
-    // alert("delete" + JSON.stringify(item));
   };
 
   function createItem () {
@@ -75,42 +75,6 @@ function App () {
     setActiveItem(item);
     toggle();
   }
-
-  function renderTabList () {
-    return (
-      <nav>
-        <span
-          className="nav-title"
-          >
-          TaskGuide
-        </span>
-        <button 
-          className="new-task-btn"
-          onClick={createItem}
-          >
-          New Task
-        </button>
-        <ul>
-          <li>
-            <button 
-              className={viewCompleted ? "nav-link active" : "nav-link"}
-              onClick={() => setViewCompleted(true)}
-              >
-              Complete
-            </button>
-          </li>
-          <li>
-            <button 
-              className={viewCompleted ? "nav-link" : "nav-link active"}
-              onClick={() => setViewCompleted(false)}
-              >
-              Incomplete
-            </button>
-          </li>
-        </ul>
-      </nav>
-    );
-  };
 
   function renderItems () {
     const newItems = taskList.filter(
@@ -151,37 +115,14 @@ function App () {
       </li>
     ));
   };
-
-  function renderForm() {
-    return (
-      <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Title:
-          <input 
-            type="text" 
-            value={activeItem.title} 
-            onChange={handleTitleChange} 
-            placeholder="Enter the title for your Task"
-          />
-        </label>
-        <label>
-          Description:
-          <textarea 
-            value={activeItem.description} 
-            onChange={handleDescriptionChange} 
-            placeholder="Enter the description your Task"
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      </>
-    );
-  }
   
   return (
     <>
-    {renderTabList()}
+    <Navigation
+      createItem={createItem}
+      viewCompleted={viewCompleted}
+      setViewCompleted={setViewCompleted}
+    />
     <main>
       <ul>
         {renderItems()}
@@ -191,12 +132,15 @@ function App () {
       visibility={visibility}
       close={toggle}
     >
-      {renderForm()}
+      <Form
+        handleSubmit={handleSubmit}
+        activeItem={activeItem}
+        handleTitleChange={handleTitleChange}
+        handleDescriptionChange={handleDescriptionChange}
+      />
     </Modal>
     </>
   );
-
-  
 }
 
 export default App;

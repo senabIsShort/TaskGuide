@@ -20,18 +20,3 @@
 .content {
     flex: 0 0 80%;
 }
-
-.content form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.content form label {
-    margin-bottom: 1rem;
-}
-
-.content form:last-child {
-    margin-bottom: 1rem;
-}
