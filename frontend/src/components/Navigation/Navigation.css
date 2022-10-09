@@ -33,12 +33,15 @@ nav ul li {
 	color: black;
 	background-color: var(--secondary-color);
 	border-radius: 8px;
-	border-style: solid;
-	border-color: var(--secondary-color-accent)
+	border: 1px solid var(--secondary-color);
 }
 
 .new-task-btn:hover {
-	background-color: var(--btn-hover-color);
+	background-color: var(--secondary-color-accent);
+}
+
+.new-task-btn:active {
+	background-color: var(--secondary-color-darker);
 }
 
 .nav-link {
