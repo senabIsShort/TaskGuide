@@ -15,7 +15,11 @@ function Form (props) {
 			</div>
 			<div className="status">
 				<label>Status: </label>
-				<input type="checkbox"/>
+				<input 
+					type="checkbox" 
+					checked={props.activeItem.completed} 
+					onChange={props.handleStatusChange}
+				/>
 			</div>
 			<div className="description">
 				<label>Description: </label>

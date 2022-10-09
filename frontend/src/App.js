@@ -42,6 +42,12 @@ function App () {
     });
   }
 
+  function handleStatusChange (event) {
+    setActiveItem( item => {
+      return {...item, completed: event.target.checked}
+    });
+  }
+
   function handleSubmit () {
     toggle();
 
@@ -137,6 +143,7 @@ function App () {
         activeItem={activeItem}
         handleTitleChange={handleTitleChange}
         handleDescriptionChange={handleDescriptionChange}
+        handleStatusChange={handleStatusChange}
       />
     </Modal>
     </>
