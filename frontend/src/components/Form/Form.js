@@ -4,24 +4,30 @@ function Form (props) {
 	return (
 		<>
 		<form onSubmit={props.handleSubmit}>
-			<label>
-				Title:
+			<div className="title">
+				<label className="titleL">Title:</label>
 				<input 
+					className="titleI"
 					type="text" 
 					value={props.activeItem.title} 
 					onChange={props.handleTitleChange} 
 					placeholder="Enter the title for your Task"
 				/>
-			</label>
-			<label>
-				Description:
+			</div>
+			<div className="status">
+				<label className="statusL">Status:</label>
+				<input className="statusCB" type="checkbox"/>
+			</div>
+			<div className="description">
+				<label className="descriptionL">Description: </label>
 				<textarea 
+					className="descriptionI"
 					value={props.activeItem.description} 
 					onChange={props.handleDescriptionChange} 
 					placeholder="Enter the description your Task"
 				/>
-			</label>
-			<input type="submit" value="Submit" />
+			</div>
+			<input className="submit" type="submit" value="Submit" />
 		</form>
 		</>
 	);
