@@ -12,7 +12,7 @@ function Navigation (props) {
 				className="new-task-btn"
 				onClick={props.createItem}
 				>
-				New Task
+				New&nbsp;Task
 			</button>
 			<ul>
 				<li>

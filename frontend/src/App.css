@@ -6,17 +6,13 @@
   --contrast-color: hsl(350, 100%, 70%);
   --contrast-color-darker: hsl(350, 100%, 65%);
   --contrast-color-accent: hsl(350, 100%, 75%);
-}
-
-#root {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  scrollbar-width: none; /* only compatible with Firefox */
 }
 
 main {
-  height: 100%;
+  height: calc(100% -3rem); /* give <main> element the rest of the space occupied by <nav> */
+  position: relative;
+  top: 3rem; /* <main> element below the <nav> */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,6 +26,7 @@ main ul {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  row-gap: 0.5rem;
   justify-content: space-evenly;
   align-items: center;
 }
