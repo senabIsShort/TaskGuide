@@ -90,11 +90,10 @@ function App () {
     return newItems.map((item) => (
       <li
         key={item.id}
+        className={`${viewCompleted ? "completed-task" : ""}`}
       >
         <span
-          className={`task-title ${
-            viewCompleted ? "completed-task" : ""
-          }`}
+          className={`task-title`}
           title={item.description}
         >
           {item.title}

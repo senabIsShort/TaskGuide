@@ -6,6 +6,9 @@
   --contrast-color: hsl(350, 100%, 70%);
   --contrast-color-darker: hsl(350, 100%, 65%);
   --contrast-color-accent: hsl(350, 100%, 75%);
+  --greenlight-color: hsl(120, 61%, 50%);
+  --greenlight-color-darker: hsl(120, 61%, 45%);
+  --greenlight-color-accent: hsl(120, 61%, 60%);
   scrollbar-width: none; /* only compatible with Firefox */
 }
 
@@ -49,6 +52,10 @@ main ul li {
   text-shadow: 2px 2px 1px var(--secondary-color-accent);
 }
 
+.completed-task {
+  border: 2px var(--greenlight-color) solid;
+}
+
 main ul li p {
   padding: 0 1rem;
   flex: 0 0 80%;
@@ -63,6 +70,7 @@ main ul li p {
   padding: 0.25rem 0.5rem;
   border-style: none;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .btn-secondary {

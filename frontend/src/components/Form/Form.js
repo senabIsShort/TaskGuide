@@ -29,7 +29,7 @@ function Form (props) {
 					placeholder="Any details about your Task ?"
 				/>
 			</div>
-			<input className="submit" type="submit" value="Submit &#10004;" />
+			<input className="btn submit" type="submit" value="Submit &#10004;" />
 		</form>
 		</>
 	);

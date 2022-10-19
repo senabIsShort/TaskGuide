@@ -13,7 +13,7 @@ function Modal (props) {
 		<dialog className="modal" id="modal">
 			<div className="modalHeader">
 				<h2>Edit Task</h2>
-				<button className="toggle-button" onClick={props.close}>
+				<button className="btn toggle-button" onClick={props.close}>
 					&#10006; Close
 				</button>
 			</div>

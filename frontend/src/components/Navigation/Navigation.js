@@ -9,7 +9,7 @@ function Navigation (props) {
 				TaskGuide
 			</span>
 			<button 
-				className="new-task-btn"
+				className="btn new-task-btn"
 				onClick={props.createItem}
 				>
 				New&nbsp;Task
