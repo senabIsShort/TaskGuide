@@ -1,4 +1,7 @@
 # TaskGuide
+This is a ToDoList app I created using Django, DjangoRESTFramework, React and create-react-app.  
+The backend is just a REST API, without users, so not production-ready.
+This was the stepping stone for [CustomTaskGuide](https://github.com/senabIsShort/CustomTaskGuide)
 
 # Setup
 
